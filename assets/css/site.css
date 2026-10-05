@@ -249,3 +249,4 @@ figcaption { font-size: .9rem; color: var(--muted); margin-top: 12px; }
 
 html[lang="zh-CN"] body { line-height: 1.7; }
 html[lang="zh-CN"] .hero h1 { letter-spacing: -.01em; }
+html[lang="zh-CN"] .hero h1 em { display: inline; }

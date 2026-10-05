@@ -1,6 +1,6 @@
 // Chinese copy for the page. English lives in index.html itself, so it is what search engines and no-JS visitors see.
 window.ZD_ZH = {
-  "doc.title": "ZestDrop · 拖动，松手，即转换",
+  "doc.title": "ZestDrop · 拖，松，转！",
   "doc.description": "ZestDrop 是免费开源的 Windows 文件转换工具。拖文件时按住 Shift，松手放到想要的格式上即可。图片、视频、音频、PDF、Office 和压缩包，全部在本机处理。",
   "skip": "跳到正文",
   "nav.how": "使用方式",
@@ -8,7 +8,7 @@ window.ZD_ZH = {
   "nav.faq": "常见问题",
   "nav.download": "下载",
   "hero.eyebrow": "免费 · 开源 · Windows",
-  "hero.title": "拖动，松手，<em>即转换。</em>",
+  "hero.title": "拖，松，<em>转！</em>",
   "hero.lead": "拖动任意文件时按下 <kbd>Shift</kbd>，光标下方就会弹出格式轮盘，在想要的格式上松手即可。不用打开窗口，不用上传，也不用开网页。",
   "cta.download": "下载 Windows 版",
   "cta.source": "在 GitHub 查看源码",
