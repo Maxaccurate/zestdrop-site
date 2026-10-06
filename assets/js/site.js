@@ -50,7 +50,7 @@
   onScroll();
 
   /* ---------- Latest release (falls back to the links in the HTML) ---------- */
-  let release = { tag: "v0.1.1", size: 269389557 };
+  let release = { tag: "v0.1.0", size: 288057762 };
   function renderRelease() {
     const mb = Math.round(release.size / 1048576);
     const label = `${release.tag} · ${mb} MB · ${lang === "zh" ? "便携 ZIP" : "portable ZIP"}`;

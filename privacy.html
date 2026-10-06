@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy · ZestDrop</title>
+<meta name="description" content="ZestDrop privacy policy: the app processes your files on your own PC and collects no personal data.">
+<link rel="canonical" href="https://zestdrop.org/privacy.html">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="/assets/css/site.css?v=3">
+<style>
+  .policy { max-width: 720px; padding-block: 48px 72px; }
+  .policy h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 8px; }
+  .policy h2 { font-size: 1.25rem; margin: 36px 0 10px; }
+  .policy p, .policy li { color: var(--muted); }
+  .policy ul { padding-left: 1.2em; display: grid; gap: 8px; }
+  .policy .updated { font-size: .9rem; margin-bottom: 28px; }
+  .policy section + section { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 40px; }
+  .back { display: inline-block; margin: 24px 0 0; }
+</style>
+</head>
+<body>
+<main class="wrap policy">
+  <a class="back" href="/">← ZestDrop</a>
+
+  <section lang="en" id="en">
+    <h1>Privacy policy</h1>
+    <p class="updated">Last updated: 5 October 2026 · <a href="#zh">中文</a></p>
+    <p>ZestDrop is a free, open-source file converter for Windows. In short: <strong>your files never leave your PC, and the app collects no personal data.</strong></p>
+
+    <h2>The ZestDrop app</h2>
+    <ul>
+      <li><strong>Your files stay on your computer.</strong> All conversions run locally with engines bundled in the app (FFmpeg, 7-Zip, Python). Nothing is uploaded, and the app works offline.</li>
+      <li><strong>No network connections.</strong> The app does not contact any server: no accounts, ads, analytics, telemetry or crash reporting.</li>
+      <li><strong>Keyboard.</strong> To open its menu, ZestDrop checks whether Shift, Ctrl, F8, F9 or Esc are held while you drag a file. It does not record what you type.</li>
+      <li><strong>Local log.</strong> A small log in <code>%LOCALAPPDATA%\ZestDrop\logs</code> records events such as "job finished" and error messages, to help with troubleshooting. It never leaves your PC, is capped in size, and you can delete it at any time.</li>
+      <li><strong>Settings.</strong> Your language choice is saved in <code>%LOCALAPPDATA%\ZestDrop\settings.json</code>.</li>
+      <li><strong>Microsoft Office.</strong> Some Office conversions use the copy of Word, Excel or PowerPoint installed on your PC. ZestDrop does not change Office's own privacy settings.</li>
+    </ul>
+
+    <h2>This website</h2>
+    <p>zestdrop.org may count visits with Cloudflare Web Analytics, which does not use cookies or collect personal data. To show the latest version, the download button asks GitHub's public API for release information; GitHub's privacy policy applies to that request. Downloads are served by GitHub.</p>
+
+    <h2>Children</h2>
+    <p>ZestDrop collects no personal information from anyone, including children.</p>
+
+    <h2>Changes and contact</h2>
+    <p>If this policy changes, the new version will be posted on this page with a new date. Questions: open an issue at <a href="https://github.com/Maxaccurate/ZestDrop/issues">github.com/Maxaccurate/ZestDrop/issues</a>.</p>
+  </section>
+
+  <section lang="zh-CN" id="zh">
+    <h1>隐私政策</h1>
+    <p class="updated">最后更新：2026 年 10 月 5 日 · <a href="#en">English</a></p>
+    <p>ZestDrop 是一款免费开源的 Windows 文件转换工具。简单来说：<strong>你的文件不会离开你的电脑，应用不收集任何个人数据。</strong></p>
+
+    <h2>ZestDrop 应用</h2>
+    <ul>
+      <li><strong>文件只留在你的电脑上。</strong>所有转换都由应用内置的引擎（FFmpeg、7-Zip、Python）在本机完成，不上传任何内容，断网也能使用。</li>
+      <li><strong>不进行任何网络连接。</strong>应用不连接任何服务器：没有账号、广告、统计、遥测或崩溃报告。</li>
+      <li><strong>键盘。</strong>为了打开菜单，ZestDrop 只在你拖动文件时检查 Shift、Ctrl、F8、F9 或 Esc 是否按下，不会记录你输入的内容。</li>
+      <li><strong>本地日志。</strong><code>%LOCALAPPDATA%\ZestDrop\logs</code> 中的小型日志会记录“任务完成”和错误信息等事件，用于排查问题。它不会离开你的电脑，有大小上限，你可以随时删除。</li>
+      <li><strong>设置。</strong>你选择的界面语言保存在 <code>%LOCALAPPDATA%\ZestDrop\settings.json</code>。</li>
+      <li><strong>Microsoft Office。</strong>部分 Office 转换会调用你电脑上已安装的 Word、Excel 或 PowerPoint。ZestDrop 不会更改 Office 自身的隐私设置。</li>
+    </ul>
+
+    <h2>本网站</h2>
+    <p>zestdrop.org 可能使用 Cloudflare Web Analytics 统计访问量，它不使用 Cookie，也不收集个人数据。为了显示最新版本，下载按钮会向 GitHub 的公开 API 查询版本信息，该请求适用 GitHub 的隐私政策。下载文件由 GitHub 提供。</p>
+
+    <h2>儿童</h2>
+    <p>ZestDrop 不收集任何人（包括儿童）的个人信息。</p>
+
+    <h2>变更与联系</h2>
+    <p>如果本政策有更新，新版本会发布在本页并注明日期。如有疑问，请在 <a href="https://github.com/Maxaccurate/ZestDrop/issues">github.com/Maxaccurate/ZestDrop/issues</a> 提交 Issue。</p>
+  </section>
+</main>
+</body>
+</html>

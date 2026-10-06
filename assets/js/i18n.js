@@ -12,7 +12,7 @@ window.ZD_ZH = {
   "hero.lead": "拖动任意文件时按下 <kbd>Shift</kbd>，光标下方就会弹出格式轮盘，在想要的格式上松手即可。不用打开窗口，不用上传，也不用开网页。",
   "cta.download": "下载 Windows 版",
   "cta.source": "在 GitHub 查看源码",
-  "cta.fine": "Windows x64 · 目前为简体中文界面",
+  "cta.fine": "Windows x64 · 简体中文和英文界面",
   "demo.help": "试一试：拖动一个文件，在轮盘的某一格上松手。",
   "demo.ring": "把文件拖到这里",
   "demo.formats": "格式",
@@ -72,7 +72,7 @@ window.ZD_ZH = {
   "dl.3": "拖动一个文件，按下 <kbd>Shift</kbd>。",
   "dl.notes": "更新说明与 SHA-256 校验值",
   "dl.all": "所有版本",
-  "dl.req": "需要 Windows x64。界面目前为简体中文。按原版式导出 Office 文件需要桌面版 Microsoft Word、Excel 或 PowerPoint。",
+  "dl.req": "需要 Windows x64。界面支持简体中文和英文，可随时在托盘菜单中切换。按原版式导出 Office 文件需要桌面版 Microsoft Word、Excel 或 PowerPoint。",
   "faq.title": "常见问题",
   "faq.1.q": "Windows 提示“Windows 已保护你的电脑”，安全吗？",
   "faq.1.a": "<p>ZestDrop 目前还没有代码签名，所以 Windows SmartScreen 会对来自未知发布者的新下载给出提示。点击<b>更多信息</b>，再点<b>仍要运行</b>即可。如果想确认下载的是官方文件，可以对照发布页上的 SHA-256 校验值。完整源代码公开在 GitHub 上。</p>",
@@ -85,7 +85,7 @@ window.ZD_ZH = {
   "faq.5.q": "转换后的文件保存在哪里？",
   "faq.5.a": "<p>保存在原文件所在的文件夹，并带有后缀，例如 <code>photo-converted.jpg</code>。如果重名会自动加编号，原文件不会被改动。右键托盘图标可以打开最近一次输出所在的文件夹。</p>",
   "faq.6.q": "有英文界面吗？",
-  "faq.6.a": "<p>暂时没有，界面目前为简体中文。JPG、PDF 等格式名在任何语言中都一样，所以即使不懂中文，格式转换也很容易上手。</p>",
+  "faq.6.a": "<p>有。从 v0.1.0 起，界面支持英文和简体中文。首次启动跟随 Windows 显示语言，之后可右键托盘图标，在<b>语言 / Language</b> 中切换。</p>",
   "faq.7.q": "需要安装 Microsoft Office 吗？",
   "faq.7.a": "<p>只有按原版式导出 Word、Excel 和 PowerPoint 文件（例如导出 PDF 或图片）时才需要，ZestDrop 会调用你已安装的 Office 完成这些操作。没有 Office 时，仍然可以从新版 Office 文件中提取文本和表格数据。</p>",
   "faq.8.q": "如何更新或卸载？",
@@ -94,7 +94,8 @@ window.ZD_ZH = {
   "foot.license": "以 MIT 许可证开源。内置的第三方组件遵循各自的许可证。",
   "foot.releases": "版本发布",
   "foot.issues": "反馈问题",
-  "foot.guide": "使用说明"
+  "foot.guide": "使用说明",
+  "foot.privacy": "隐私政策"
 };
 
 // Strings used by the interactive demo, in both languages.
