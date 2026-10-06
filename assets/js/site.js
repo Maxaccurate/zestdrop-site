@@ -26,6 +26,8 @@
     document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
     $$("[data-i18n]").forEach(el => { const value = text(el.dataset.i18n); if (value != null) el.innerHTML = value; });
     $$("[data-i18n-alt]").forEach(el => { const value = text(el.dataset.i18nAlt); if (value != null) el.alt = value; });
+    // Screenshots show the app in the visitor's language.
+    $$("img[data-src-en]").forEach(img => { const src = lang === "zh" ? img.dataset.srcZh : img.dataset.srcEn; if (src && !img.src.endsWith(src)) img.src = src; });
     document.title = text("doc.title");
     metaDescription.content = text("doc.description");
     const toggle = $("#lang-toggle");
@@ -50,7 +52,7 @@
   onScroll();
 
   /* ---------- Latest release (falls back to the links in the HTML) ---------- */
-  let release = { tag: "v0.1.0", size: 288057762 };
+  let release = { tag: "v0.1.1", size: 274469261 };
   function renderRelease() {
     const mb = Math.round(release.size / 1048576);
     const label = `${release.tag} · ${mb} MB · ${lang === "zh" ? "便携 ZIP" : "portable ZIP"}`;

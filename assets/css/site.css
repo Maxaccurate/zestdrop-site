@@ -204,13 +204,19 @@ code { font: .9em var(--mono); background: var(--bg-alt); border: 1px solid var(
 .shot-main { margin: 44px 0 0; }
 .shot-main img { border-radius: 16px; border: 1px solid var(--line); box-shadow: var(--shadow); width: 100%; }
 figcaption { font-size: .9rem; color: var(--muted); margin-top: 12px; }
-.shot-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
+.shot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
 .shot-grid figure { margin: 0; }
-.shot-grid img { border-radius: 16px; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; box-shadow: var(--shadow); }
-@media (max-width: 760px) { .shot-grid { grid-template-columns: 1fr; max-width: 440px; } }
-.shot-progress { margin: 28px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; background: #26282B; border-radius: var(--radius); padding: 22px 28px; }
-.shot-progress img { width: min(320px, 100%); }
-.shot-progress figcaption { color: #C9CDD2; margin: 0; flex: 1 1 260px; font-size: .98rem; }
+.shot-grid img { border-radius: 16px; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; box-shadow: var(--shadow); }
+@media (max-width: 640px) { .shot-grid { grid-template-columns: 1fr; max-width: 440px; } }
+
+.jobs { margin-top: 28px; display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 28px 44px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
+.jobs img { width: 100%; height: auto; border-radius: 14px; box-shadow: var(--shadow); }
+.jobs h3 { font-size: 1.4rem; margin-bottom: 16px; }
+.jobs ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.jobs li { color: var(--muted); padding-left: 18px; position: relative; }
+.jobs li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 999px; background: var(--accent); }
+.jobs li b { color: var(--ink); }
+@media (max-width: 760px) { .jobs { grid-template-columns: 1fr; padding: 20px; } .jobs img { max-width: 300px; margin-inline: auto; } }
 
 .section-dark { background: #1A1B1D; color: #ECEDEE; }
 .section-dark .section-lead { color: #A9AFB6; }
