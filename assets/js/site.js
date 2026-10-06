@@ -125,7 +125,8 @@
   const toast = $("#toast"), toastTitle = $("#toast-title"), toastDetail = $("#toast-detail"), toastBar = $("#toast-bar"), toastTime = $("#toast-time");
   const modeButtons = { formats: $("#mode-formats"), tools: $("#mode-tools") };
   const SVG = "http://www.w3.org/2000/svg";
-  const C = 190, OUTER = 176, INNER = 57, MAX_OUTPUTS = 3;
+  const wheelUI = window.ZD_WHEEL;
+  const C = wheelUI.CENTER, MAX_OUTPUTS = 3;
   const names = new Set();
   const outputs = [];
   let defaultMode = "formats";   // set by the toggle under the stage
@@ -181,7 +182,7 @@
     parent.appendChild(node);
     return node;
   }
-  const polar = (radius, angle) => [C + radius * Math.cos(angle), C + radius * Math.sin(angle)];
+  const polar = wheelUI.polar;
   function showMode(mode) {
     for (const [key, button] of Object.entries(modeButtons)) button.setAttribute("aria-pressed", String(key === mode));
   }
@@ -190,14 +191,11 @@
     s.options = menu(s.file, s.mode);
     s.highlighted = -1;
     showMode(s.mode);
-    wheel.replaceChildren();
-    svg("circle", { class: "disk", cx: C, cy: C, r: 184 }, wheel);
+    const layers = wheelUI.base(wheel);
     const n = s.options.length;
     s.options.forEach((option, i) => {
-      const angle = -Math.PI / 2 + i * 2 * Math.PI / n, half = Math.PI / n;
-      const start = angle - half + .025, end = angle + half - .025, large = end - start > Math.PI ? 1 : 0;
-      const [x1, y1] = polar(INNER, start), [x2, y2] = polar(OUTER, start), [x3, y3] = polar(OUTER, end), [x4, y4] = polar(INNER, end);
-      svg("path", { class: "petal", "data-i": i, role: "option", "aria-label": label(option), d: `M${x1} ${y1}L${x2} ${y2}A${OUTER} ${OUTER} 0 ${large} 1 ${x3} ${y3}L${x4} ${y4}A${INNER} ${INNER} 0 ${large} 0 ${x1} ${y1}Z` }, wheel);
+      const angle = -Math.PI / 2 + i * 2 * Math.PI / n;
+      wheelUI.petal(layers, i, n, { "data-i": i, role: "option", "aria-label": label(option) });
       const [lx, ly] = polar(119, angle), text = label(option), words = text.split(" ");
       const node = svg("text", { class: "label" + (n > 7 ? " small" : ""), x: lx, y: ly, "data-i": i }, wheel);
       if (words.length > 1 && text.length > 9) {
@@ -206,7 +204,7 @@
         svg("tspan", { x: lx, dy: "1.15em" }, node).textContent = words.slice(cut).join(" ");
       } else node.textContent = text;
     });
-    svg("circle", { class: "hub", cx: C, cy: C, r: 54 }, wheel);
+    wheelUI.hub(wheel);
     svg("text", { class: "hub-title", x: C, y: C - 2 }, wheel).textContent = n ? demoText().files(1) : demoText().none;
     svg("text", { class: "hub-hint", x: C, y: C + 20, id: "hub-hint" }, wheel).textContent = n ? demoText().release : demoText().escHint;
   }
@@ -214,7 +212,7 @@
     const s = session;
     if (!s || index === s.highlighted) return;
     s.highlighted = index;
-    $$(".petal, .label", wheel).forEach(node => node.classList.toggle("on", Number(node.dataset.i) === index));
+    wheelUI.select(wheel, index);
     const hint = $("#hub-hint", wheel);
     if (hint && s.options.length) hint.textContent = index >= 0 ? label(s.options[index]) : demoText().release;
     const badge = $(".badge", ghost);
@@ -230,10 +228,7 @@
     if (!s || !s.options.length) return -1;
     const g = geometry();
     if (!g.scale) return -1;
-    const dx = (x - g.cx) / g.scale, dy = (y - g.cy) / g.scale;
-    const r = Math.hypot(dx, dy), n = s.options.length;
-    if (r < INNER || r > OUTER + 6) return -1;
-    return ((Math.round((Math.atan2(dy, dx) + Math.PI / 2) / (2 * Math.PI / n)) % n) + n) % n;
+    return wheelUI.hit(wheel, C + (x - g.cx) / g.scale, C + (y - g.cy) / g.scale);
   }
   function petalPoint(index) {
     const g = geometry(), angle = -Math.PI / 2 + index * 2 * Math.PI / session.options.length;

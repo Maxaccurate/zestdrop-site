@@ -48,7 +48,9 @@
     expect(labels(FMT).join() === "Pack ZIP,Pack TAR,Pack GZIP,Pack RAR", "pack " + labels(FMT));
     expect($("#show-fmt-cap").textContent === "Pack as ZIP", "pack caption");
     expect(labels(TOOLS).join() === "Extract" && $("#show-tools-cap").textContent === "Extract", "extract");
-    expect(/a1/.test(petals(TOOLS)[0].getAttribute("d")) || petals(TOOLS)[0].getAttribute("d").includes("a176"), "ring path");
+    const path = petals(TOOLS)[0];
+    expect(path.getAttribute("d").includes("Q") && path.getAttribute("d").includes("A172 172 0 1 1"), "rounded single-option path");
+    expect(path.isPointInFill(new DOMPoint(190, 71)) && !path.isPointInFill(new DOMPoint(190, 190)), "single-option fill and centre hole");
     tab("images").click();
     expect($("#show-fmt-label").textContent === "Convert formats", "label did not return");
   });

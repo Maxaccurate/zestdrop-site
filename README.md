@@ -5,14 +5,15 @@ Static website for [ZestDrop](https://github.com/Maxaccurate/ZestDrop). No build
 - `index.html` holds the English copy (what search engines see).
 - `assets/js/i18n.js` holds the Chinese copy and the demo strings. Every `data-i18n` key in the HTML needs a matching Chinese entry.
 - `assets/js/site.js` runs the language switch, reads the latest release from the GitHub API to keep the download button current, and powers the drag-to-convert demo.
+- `assets/js/wheel-ui.js` draws the shared rounded faces, raised sidewalls and hub for both the demo and showcase. Its geometry mirrors `DropWheel.Keycap` in the app's `FloatingWheel.cs` (outer radius 172, inner dead zone 65). Keep it in sync when the app's wheel changes; hit testing uses the actual rounded face, not an approximate wedge.
 
-Preview locally with `python -m http.server 8765` in this folder, then open http://localhost:8765.
+Preview locally with `python -m http.server 9876` in this folder, then open http://localhost:9876.
 
 When you change a CSS or JS file, bump its `?v=` number in `index.html` (and `404.html` for the stylesheet) so visitors don't get a stale cached copy.
 
 ## Testing the demo
 
-`tests/demo-tests.js` drives the drag-to-convert demo with pointer and keyboard events (21 checks: conversions, the job queue, cancelling with Esc, alt-tab or a missed release, keyboard use, language switching and layout). With the site running locally, open http://localhost:8765/?lang=en, paste the file into the browser console, and wait about 40 seconds for the summary. Synthetic events can't reproduce every browser quirk, so also try a few drags with a real mouse.
+`tests/demo-tests.js` drives the drag-to-convert demo with pointer and keyboard events (21 checks: conversions, the job queue, cancelling with Esc, alt-tab or a missed release, keyboard use, language switching and layout). With the site running locally, open http://localhost:9876/?lang=en, paste the file into the browser console, and wait about 40 seconds for the summary. Synthetic events can't reproduce every browser quirk, so also try a few drags with a real mouse.
 
 ## File-type showcase and the two numbers
 
@@ -24,3 +25,11 @@ The numbers are counted, not estimated, so recount them when the catalog changes
 - **27 advanced file tools** = the tool definitions in `Catalog.cs`.
 
 `tests/showcase-tests.js` (10 checks) covers this section; run it the same way as `tests/demo-tests.js`.
+
+`tests/wheel-ui-tests.js` (6 checks) covers the rounded geometry for 0, 1, 4, 6, 7, 8, 9 and 10 options: face/sidewall pairing, correct petal centres, the hub dead zone, gaps, rounded-off corners and selection styling. Also test native mouse drags on a face and in a gap, and touch taps in the showcase.
+
+## Refreshing screenshots
+
+The website images are real renders of the app, not recreated UI. `scripts/refresh-screenshots.py` captures the format wheel, tool wheel, trim window and progress cards in English and Chinese, and rebuilds the social-share preview. It requires Pillow and a current portable app build. Pass `--app <ZestDrop.exe>`, `--video <sample.mp4>`, `--image <sample.png/jpg>` and `--render-dir <scratch folder>`. It opens and closes preview windows, writes intermediates only to the supplied scratch folder, and updates `assets/img`; it does not change the app repository.
+
+After refreshing, bump image query versions in `index.html` as well as CSS/JS versions so visitors fetch the new assets.

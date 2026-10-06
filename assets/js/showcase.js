@@ -6,7 +6,8 @@
   if (!root || !window.ZD || !window.ZD_SHOW) return;
   const $ = (sel, scope = root) => scope.querySelector(sel);
   const $$ = (sel, scope = root) => [...scope.querySelectorAll(sel)];
-  const SVG = "http://www.w3.org/2000/svg", C = 190, OUTER = 176, INNER = 57;
+  const SVG = "http://www.w3.org/2000/svg";
+  const wheelUI = window.ZD_WHEEL, C = wheelUI.CENTER;
 
   const CATS = {
     images:    { formats: ["png", "webp", "heic", "tiff", "avif", "bmp", "pdf", "docx"], tools: ["compress", "removeMetadata", "editImage", "frameImage", "cropImage", "redactImage"] },
@@ -22,31 +23,20 @@
   let cat = order.includes(requested) ? requested : "images";
 
   const fmtName = f => f === "gz" ? "GZIP" : f.toUpperCase();
-  const polar = (radius, angle) => [C + radius * Math.cos(angle), C + radius * Math.sin(angle)];
+  const polar = wheelUI.polar;
   function node(name, attrs, parent) {
     const el = document.createElementNS(SVG, name);
     for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
     parent.appendChild(el);
     return el;
   }
-  // One full ring, used when a menu has a single option.
-  const ring = () => `M${C - OUTER} ${C}a${OUTER} ${OUTER} 0 1 0 ${2 * OUTER} 0a${OUTER} ${OUTER} 0 1 0 ${-2 * OUTER} 0ZM${C - INNER} ${C}a${INNER} ${INNER} 0 1 1 ${2 * INNER} 0a${INNER} ${INNER} 0 1 1 ${-2 * INNER} 0Z`;
-
   // Draws a wheel and makes it respond to hover, tap and arrow keys. `caption(i)` gives the text under the wheel.
   function wheel(svg, labels, hubTitle, caption, captionEl, ariaLabel) {
-    svg.replaceChildren();
+    const layers = wheelUI.base(svg);
     svg.setAttribute("aria-label", ariaLabel);
-    node("circle", { class: "disk", cx: C, cy: C, r: 184 }, svg);
-    const n = labels.length, petals = [], texts = [];
+    const n = labels.length, petals = [];
     labels.forEach((text, i) => {
-      let d;
-      if (n === 1) d = ring();
-      else {
-        const angle = -Math.PI / 2 + i * 2 * Math.PI / n, half = Math.PI / n, start = angle - half + .025, end = angle + half - .025;
-        const [x1, y1] = polar(INNER, start), [x2, y2] = polar(OUTER, start), [x3, y3] = polar(OUTER, end), [x4, y4] = polar(INNER, end);
-        d = `M${x1} ${y1}L${x2} ${y2}A${OUTER} ${OUTER} 0 0 1 ${x3} ${y3}L${x4} ${y4}A${INNER} ${INNER} 0 0 0 ${x1} ${y1}Z`;
-      }
-      petals.push(node("path", { class: "petal", d, "fill-rule": "evenodd" }, svg));
+      petals.push(wheelUI.petal(layers, i, n).face);
       const [lx, ly] = polar(119, -Math.PI / 2 + i * 2 * Math.PI / n);
       const label = node("text", { class: "label" + (n > 7 ? " small" : ""), x: lx, y: ly }, svg);
       const words = text.split(" ");
@@ -55,9 +45,8 @@
         node("tspan", { x: lx, dy: "-0.55em" }, label).textContent = words.slice(0, cut).join(" ");
         node("tspan", { x: lx, dy: "1.15em" }, label).textContent = words.slice(cut).join(" ");
       } else label.textContent = text;
-      texts.push(label);
     });
-    node("circle", { class: "hub", cx: C, cy: C, r: 54 }, svg);
+    wheelUI.hub(svg);
     node("text", { class: "hub-title", x: C, y: C - 2 }, svg).textContent = hubTitle;
     const hint = node("text", { class: "hub-hint", x: C, y: C + 20 }, svg);
 
@@ -65,8 +54,7 @@
     const set = i => {
       if (i === current) return;
       current = i;
-      petals.forEach((p, k) => p.classList.toggle("on", k === i));
-      texts.forEach((t, k) => t.classList.toggle("on", k === i));
+      wheelUI.select(svg, i);
       hint.textContent = labels[i];
       captionEl.textContent = caption(i);
     };

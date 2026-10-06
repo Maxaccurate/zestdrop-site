@@ -12,10 +12,17 @@
   --cap-a: #FFFFFF;
   --cap-b: #EFEBE4;
   --accent-text: #B5440F;
-  --petal: #F2F3F5;
+  --petal: #F1F3F2;
   --petal-ink: #24272B;
-  --disk: rgba(248, 249, 250, .97);
-  --disk-line: #E2E4E8;
+  --petal-side: #DDE2DE;
+  --petal-outline: #CFD5D1;
+  --petal-selected: #C94B04;
+  --petal-selected-side: #A63803;
+  --wheel-hub: #FFFFFF;
+  --wheel-hub-outline: #F8FAF8;
+  --wheel-muted: #5F656D;
+  --disk: #EAEEEB;
+  --disk-line: #E3E8E4;
   --stage-a: #E9EBED;
   --stage-b: #CFD3D7;
   --stage-c: rgba(30, 32, 35, .55);
@@ -40,10 +47,15 @@
     --cap-a: #3A3D42;
     --cap-b: #2A2C30;
     --accent-text: #F59162;
-    --petal: #2A2C30;
-    --petal-ink: #E9EAEC;
-    --disk: rgba(32, 34, 37, .97);
-    --disk-line: #3A3D42;
+    --petal: #343C38;
+    --petal-ink: #F0F4F1;
+    --petal-side: #1B221F;
+    --petal-outline: #4C5952;
+    --wheel-hub: #29322D;
+    --wheel-hub-outline: #46534A;
+    --wheel-muted: #B4BEB7;
+    --disk: #222A26;
+    --disk-line: #303B34;
     --stage-a: #2A2D31;
     --stage-b: #1B1D20;
     --stage-c: rgba(0, 0, 0, .55);
@@ -144,15 +156,18 @@ code { font: .9em var(--mono); background: var(--bg-alt); border: 1px solid var(
 .wheel-wrap { position: absolute; inset: 0; display: grid; place-items: center; z-index: 6; pointer-events: none; }
 .wheel { width: min(84%, 360px); height: auto; overflow: visible; filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .22)); animation: wheel-in .22s cubic-bezier(.2, .9, .3, 1.2); }
 @keyframes wheel-in { from { transform: scale(.82); opacity: 0; } to { transform: none; opacity: 1; } }
-.wheel .disk { fill: var(--disk); stroke: var(--disk-line); }
-.wheel .petal { fill: var(--petal); stroke: var(--disk); stroke-width: 3; transition: fill .12s; }
-.wheel .petal.on { fill: var(--accent); }
+.wheel .disk { fill: var(--disk); stroke: var(--disk-line); stroke-width: .5; }
+.wheel .petal-side { fill: var(--petal-side); filter: drop-shadow(0 2px 3px rgba(42, 50, 45, .09)); pointer-events: none; transition: fill .12s; }
+.wheel .petal-side.on { fill: var(--petal-selected-side); }
+.wheel .petal { fill: var(--petal); stroke: var(--petal-outline); stroke-width: .7; transition: fill .12s, stroke .12s; }
+.wheel .petal.on { fill: var(--petal-selected); stroke: var(--petal-selected); }
 .wheel .label { fill: var(--petal-ink); font: 600 14px var(--font); text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
 .wheel .label.small { font-size: 12px; }
 .wheel .label.on { fill: #fff; }
-.wheel .hub { fill: var(--surface); }
-.wheel .hub-title { fill: var(--ink); font: 650 15px var(--font); text-anchor: middle; }
-.wheel .hub-hint { fill: var(--muted); font: 400 10.5px var(--font); text-anchor: middle; }
+.wheel .hub-side { fill: var(--petal-side); filter: drop-shadow(0 2px 4px rgba(42, 50, 45, .08)); pointer-events: none; }
+.wheel .hub { fill: var(--wheel-hub); stroke: var(--wheel-hub-outline); stroke-width: 1; }
+.wheel .hub-title { fill: var(--petal-ink); font: 650 15px var(--font); text-anchor: middle; }
+.wheel .hub-hint { fill: var(--wheel-muted); font: 400 10.5px var(--font); text-anchor: middle; }
 
 .ghost { position: absolute; left: 0; top: 0; z-index: 7; pointer-events: none; transform: translate(10px, 12px); opacity: .9; }
 .ghost .file-icon { transform: rotate(-6deg) scale(.86); box-shadow: 0 10px 24px rgba(0, 0, 0, .3); }
