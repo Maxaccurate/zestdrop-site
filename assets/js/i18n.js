@@ -34,27 +34,15 @@ window.ZD_ZH = {
   "how.3.t": "在轮盘上松手",
   "how.3.d": "在想要的格式或工具上松手。新文件出现在原文件旁边，原文件永远不会被覆盖。",
   "feat.title": "一个手势，处理桌面上的所有文件",
-  "feat.lead": "轮盘只显示适用于当前文件的操作。下面是 ZestDrop 能做的事。",
-  "feat.img.t": "图片",
-  "feat.img.d": "在各种格式之间转换，或转成 PDF。支持压缩、按任意比例裁剪、马赛克或模糊打码、调整曝光、色彩和清晰度、添加背景、清除元数据，也能把多张图片合成 PDF 或拼图。",
-  "feat.vid.t": "视频",
-  "feat.vid.d": "转换格式、提取 MP3，或把片段做成 GIF。可以压缩到指定大小、裁剪时段、裁剪画面、0.125–8 倍变速、分段、拼接、保存帧、移除音频，并在指定时间范围内给画面区域打码。",
-  "feat.aud.t": "音频",
-  "feat.aud.d": "转换和压缩，按 LUFS 目标标准化响度，裁剪并去掉首尾静音，调整声道，给指定片段加消音蜂鸣，或生成便于分享的波形视频。",
-  "feat.pdf.t": "PDF 与文本",
-  "feat.pdf.d": "PDF 转 Word、图片或文本，文本转 PDF。支持合并、拆分、调整页面顺序和旋转、压缩以及编辑元数据。字幕可在 SRT、VTT 和纯文本之间转换。",
-  "feat.off.t": "Office 文档",
-  "feat.off.d": "按原版式导出 PDF 或图片、选页导出、把多个文件合并成一个 PDF，或在 Office 与 OpenDocument 格式之间转换。版式导出需要本机安装的 Microsoft Office；提取文本和表格数据则不需要。",
-  "feat.arc.t": "压缩包",
-  "feat.arc.d": "打包任意文件或文件夹、解压，或把一种压缩格式转成另一种。解压前会检查不安全路径、链接和超大压缩包，确认安全后才写入。",
+  "feat.lead": "轮盘只显示适用于当前文件的操作。选择文件类型，看看它的菜单。",
+  "stat.conv.t": "种转换选项",
+  "stat.conv.d": "覆盖图片、视频、音频、文档、Office 文件和压缩包的“输入格式→输出格式”组合，其中 145 种需要调用你已安装的 Microsoft Office。",
+  "stat.tools.t": "个高级文件工具",
+  "stat.tools.d": "压缩、裁剪时段、裁剪画面、打码、拼接、拆分等等，很多都带实时预览。",
   "shots.title": "需要时，有真正的工具",
   "shots.lead": "需要设置参数的工具会打开独立窗口，并提供实时预览。所有音视频工具都带播放器和进度条，裁剪时段可以直接拖动起止手柄。",
   "shots.trim": "裁剪时段工具：预览、拖动时间轴手柄、填写精确时间，然后保存新文件。",
   "shots.trim.alt": "ZestDrop 的裁剪时段窗口，包含视频预览、带橙色起止手柄的时间轴、播放控件以及开始和结束时间输入框。",
-  "shots.fmt": "图片的格式菜单 · <kbd>Shift</kbd>",
-  "shots.fmt.alt": "PNG 图片的格式轮盘，JPG 处于选中状态，周围是 WEBP、HEIC、TIFF、AVIF、BMP、PDF 和 DOCX。",
-  "shots.tools": "视频的工具菜单 · <kbd>Ctrl</kbd> + <kbd>Shift</kbd>",
-  "shots.tools.alt": "视频的工具轮盘，裁剪时段处于选中状态，周围是压缩、元数据、移除音频、裁剪画面、调整速度、保存帧、分段和视频打码。",
   "jobs.title": "每个任务都有自己的控制按钮",
   "jobs.1": "<b>暂停与继续。</b>暂停会冻结整个任务（包括 FFmpeg）并停止计时，继续后从停下的地方接着处理。",
   "jobs.2": "<b>取消。</b>停止任务并清除未完成的文件，原文件不会被改动。",
@@ -156,5 +144,41 @@ window.ZD_DEMO = {
       normalizeAudio: "标准化响度", audioToVideo: "音频可视化", trimAudio: "裁剪音频", audioChannels: "声道", redactAudio: "消音蜂鸣",
       splitPDF: "拆分 PDF", organizePDF: "管理页面", officePdf: "选页导出 PDF", extractArchive: "解包"
     }
+  }
+};
+
+// Strings for the file-type showcase (tabs and wheels).
+window.ZD_SHOW = {
+  en: {
+    cats: {
+      images: { tab: "Images", title: "Image tools", desc: "JPG, PNG, WebP, HEIC, TIFF, AVIF, BMP and SVG. Convert, compress, crop to any ratio, redact, adjust colour, add a background or strip metadata." },
+      video: { tab: "Video", title: "Video tools", desc: "MP4, MOV, MKV, WebM, AVI, WMV and GIF. Convert, extract audio, compress to a target size, trim, crop, change speed, split, save frames and redact." },
+      audio: { tab: "Audio", title: "Audio tools", desc: "MP3, M4A, WAV, FLAC, OGG, Opus, AIFF and WMA. Convert, compress, normalise loudness, trim, adjust channels, bleep out sections or make a waveform video." },
+      documents: { tab: "Documents", title: "Document tools", desc: "PDF, text, subtitles and Office files. Turn a PDF into Word, images or text, merge, split and reorder pages, or export Word, Excel and PowerPoint with your installed Office." },
+      archives: { tab: "Archives", title: "Archive tools", desc: "ZIP, TAR, GZIP and RAR. Pack files and folders, extract archives, or repack one format as another, with safety checks before anything is written." }
+    },
+    convert: "Convert formats", pack: "Pack files", tools: "Advanced tools",
+    convertTo: f => "Convert to " + f, packAs: f => "Pack as " + f,
+    file: "1 file",
+    fmtAria: (src, list) => "Format menu for " + src + ": " + list,
+    toolsAria: (src, list) => "Tool menu for " + src + ": " + list,
+    sources: { images: "a JPG image", video: "an MP4 video", audio: "a WAV file", documents: "a PDF", archives: "a folder" },
+    toolsSources: { archives: "a ZIP archive" }
+  },
+  zh: {
+    cats: {
+      images: { tab: "图片", title: "图片工具", desc: "支持 JPG、PNG、WebP、HEIC、TIFF、AVIF、BMP 和 SVG。可转换格式、压缩、按任意比例裁剪、打码、调整色彩、添加背景或清除元数据。" },
+      video: { tab: "视频", title: "视频工具", desc: "支持 MP4、MOV、MKV、WebM、AVI、WMV 和 GIF。可转换格式、提取音频、压缩到指定大小、裁剪时段、裁剪画面、变速、分段、保存帧和打码。" },
+      audio: { tab: "音频", title: "音频工具", desc: "支持 MP3、M4A、WAV、FLAC、OGG、Opus、AIFF 和 WMA。可转换、压缩、标准化响度、裁剪、调整声道、给片段加消音蜂鸣，或生成波形视频。" },
+      documents: { tab: "文档", title: "文档工具", desc: "支持 PDF、文本、字幕和 Office 文件。可把 PDF 转成 Word、图片或文本，合并、拆分、调整页面顺序，或借助已安装的 Office 导出 Word、Excel 和 PowerPoint。" },
+      archives: { tab: "压缩包", title: "压缩包工具", desc: "支持 ZIP、TAR、GZIP 和 RAR。可打包文件和文件夹、解压，或把一种压缩格式转成另一种，写入前会先做安全检查。" }
+    },
+    convert: "转换格式", pack: "打包文件", tools: "高级工具",
+    convertTo: f => "转换为 " + f, packAs: f => "打包为 " + f,
+    file: "1 个文件",
+    fmtAria: (src, list) => src + "的格式菜单：" + list,
+    toolsAria: (src, list) => src + "的工具菜单：" + list,
+    sources: { images: "JPG 图片", video: "MP4 视频", audio: "WAV 音频", documents: "PDF", archives: "文件夹" },
+    toolsSources: { archives: "ZIP 压缩包" }
   }
 };

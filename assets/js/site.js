@@ -21,6 +21,9 @@
   if (lang !== "zh") lang = "en";
   const text = key => (lang === "zh" ? window.ZD_ZH[key] : undefined) ?? EN[key];
   const demoText = () => window.ZD_DEMO[lang];
+  // Lets showcase.js re-render when the language changes.
+  const languageListeners = [];
+  window.ZD = { get lang() { return lang; }, onLanguage(fn) { languageListeners.push(fn); fn(); } };
 
   function applyLanguage() {
     document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
@@ -38,6 +41,7 @@
     $(".mode").setAttribute("aria-label", demoText().mode);
     renderRelease();
     demo.relabel();
+    languageListeners.forEach(fn => fn());
   }
   $("#lang-toggle").addEventListener("click", () => {
     lang = lang === "zh" ? "en" : "zh";
