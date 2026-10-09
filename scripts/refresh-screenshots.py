@@ -1,7 +1,9 @@
-"""Refresh website images from the app's own debug render modes, without changing the app repo.
+"""Refresh website images from the app itself, without changing the app repo.
 
-Requires Pillow. Run with --app <ZestDrop.exe> --video <sample.mp4> --image <sample.png/jpg>
---render-dir <scratch folder>. Screenshot previews briefly open and close tool windows.
+Requires Pillow and PowerShell 7 (pwsh). Run with --app <ZestDrop.exe> --video <sample.mp4>
+--image <sample.png/jpg> --render-dir <scratch folder>. Wheels and progress cards come from the app's
+debug render modes; the combined Crop & rotate window is opened briefly and captured with
+scripts/capture-window.ps1 (that window has no render mode of its own).
 """
 import argparse
 import os
@@ -69,19 +71,41 @@ def compose_jobs(path):
     return canvas.convert('RGB')
 
 
+def capture_combined(lang, path):
+    """Captures the Crop & rotate window and makes the area outside its rounded corners transparent."""
+    script = Path(__file__).resolve().parent / 'capture-window.ps1'
+    # PowerShell 7 is DPI-aware, so the capture is at the screen's real resolution (Windows PowerShell 5.1 is not).
+    subprocess.run(['pwsh', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', str(script),
+                    '-App', str(args.app.resolve()), '-Tool', 'merge:cropRotate', '-File', str(photo.resolve()),
+                    '-Lang', lang, '-Out', str(path)], check=True, timeout=120)
+    image = Image.open(path).convert('RGBA')
+    # PrintWindow paints black outside the window's rounded corners; measure the radius from the corner.
+    px = image.load()
+    radius = next(i for i in range(1, min(image.size) // 4) if sum(px[i, i][:3]) > 60) * 3.4
+    mask = Image.new('L', image.size)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, image.width - 1, image.height - 1), radius=round(radius), fill=255)
+    image.putalpha(mask)
+    # Keep about 2x the size it is shown at (1040 px wide) so it stays sharp on high-DPI screens.
+    if image.width > 2080:
+        image = image.resize((2080, round(image.height * 2080 / image.width)), Image.Resampling.LANCZOS)
+    if image.width < 1600:
+        raise SystemExit(f'Capture is only {image.width} px wide; run on a display scaled to 150% or more')
+    return image
+
+
 for lang in ('en', 'zh'):
     fmt = args.render_dir / f'wheel-formats-{lang}.png'
     tools = args.render_dir / f'wheel-tools-{lang}.png'
-    tool = args.render_dir / f'tool-trim-{lang}.png'
+    combined = args.render_dir / f'tool-crop-{lang}.png'
     jobs = args.render_dir / f'jobs-{lang}'
     render(lang, ['--debug-wheel-render', 'formats', photo, 'convert:jpg', fmt])
-    render(lang, ['--debug-wheel-render', 'tools', args.video.resolve(), 'trimVideo', tools])
-    render(lang, ['--debug-tool-render', 'trimVideo', args.video.resolve(), tool])
+    # A single video's tools are combined in v1.0; light the "Trim & split" entry.
+    render(lang, ['--debug-wheel-render', 'tools', args.video.resolve(), 'merge:trimSplit', tools])
     render(lang, ['--debug-indicator', jobs])
     for name, image in (
         (f'wheel-formats-{lang}', compose_wheel(fmt)),
         (f'wheel-tools-{lang}', compose_wheel(tools)),
-        (f'tool-trim-{lang}', Image.open(tool).convert('RGB')),
+        (f'tool-crop-{lang}', capture_combined(lang, combined)),
         (f'jobs-{lang}', compose_jobs(Path(str(jobs) + '-expanded.png'))),
     ):
         image.save(out / f'{name}.webp', quality=90, method=6)

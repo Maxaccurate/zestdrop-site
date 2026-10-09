@@ -7,7 +7,7 @@
 <meta name="description" content="ZestDrop privacy policy: the app processes your files on your own PC and collects no personal data.">
 <link rel="canonical" href="https://zestdrop.org/privacy">
 <link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="stylesheet" href="/assets/css/site.css?v=6">
+<link rel="stylesheet" href="/assets/css/site.css?v=7">
 <style>
   .policy { max-width: 720px; padding-block: 48px 72px; }
   .policy h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 8px; }
@@ -25,7 +25,7 @@
 
   <section lang="en" id="en">
     <h1>Privacy policy</h1>
-    <p class="updated">Last updated: 5 October 2026 · <a href="#zh">中文</a></p>
+    <p class="updated">Last updated: 9 October 2026 · <a href="#zh">中文</a></p>
     <p>ZestDrop is a free, open-source file converter for Windows. In short: <strong>your files never leave your PC, and the app collects no personal data.</strong></p>
 
     <h2>The ZestDrop app</h2>
@@ -34,7 +34,11 @@
       <li><strong>No network connections.</strong> The app does not contact any server: no accounts, ads, analytics, telemetry or crash reporting.</li>
       <li><strong>Keyboard.</strong> To open its menu, ZestDrop checks whether Shift, Ctrl, F8, F9 or Esc are held while you drag a file. It does not record what you type.</li>
       <li><strong>Local log.</strong> A small log in <code>%LOCALAPPDATA%\ZestDrop\logs</code> records events such as "job finished" and error messages, to help with troubleshooting. It never leaves your PC, is capped in size, and you can delete it at any time.</li>
-      <li><strong>Settings.</strong> Your language choice, and whether to show the welcome window at startup, are saved in <code>%LOCALAPPDATA%\ZestDrop\settings.json</code>.</li>
+      <li><strong>Settings.</strong> <code>%LOCALAPPDATA%\ZestDrop\settings.json</code> keeps your choices: language, wheel layout, whether to show the welcome window, the save folder you pick, your presets and flows, and the folders you ask it to watch. Presets never store regions, times or passwords. The <strong>Recent results</strong> list is kept only while ZestDrop is running.</li>
+      <li><strong>Text recognition.</strong> Uses the optical character recognition built into Windows, on your PC.</li>
+      <li><strong>Clipboard.</strong> ZestDrop reads the clipboard only when you choose to process it from the tray menu, and writes to it only when you click <strong>Copy result</strong>.</li>
+      <li><strong>Watched folders.</strong> Only the folders you add are watched. New files in them are processed on your PC, like any other job.</li>
+      <li><strong>Windows startup and Explorer menu.</strong> Only if you switch them on, ZestDrop adds itself to your Windows startup apps or to Explorer's right-click menu for your user account. Switching them off removes the entry.</li>
       <li><strong>Microsoft Office.</strong> Some Office conversions use the copy of Word, Excel or PowerPoint installed on your PC. ZestDrop does not change Office's own privacy settings.</li>
     </ul>
 
@@ -50,7 +54,7 @@
 
   <section lang="zh-CN" id="zh">
     <h1>隐私政策</h1>
-    <p class="updated">最后更新：2026 年 10 月 5 日 · <a href="#en">English</a></p>
+    <p class="updated">最后更新：2026 年 10 月 9 日 · <a href="#en">English</a></p>
     <p>ZestDrop 是一款免费开源的 Windows 文件转换工具。简单来说：<strong>你的文件不会离开你的电脑，应用不收集任何个人数据。</strong></p>
 
     <h2>ZestDrop 应用</h2>
@@ -59,7 +63,11 @@
       <li><strong>不进行任何网络连接。</strong>应用不连接任何服务器：没有账号、广告、统计、遥测或崩溃报告。</li>
       <li><strong>键盘。</strong>为了打开菜单，ZestDrop 只在你拖动文件时检查 Shift、Ctrl、F8、F9 或 Esc 是否按下，不会记录你输入的内容。</li>
       <li><strong>本地日志。</strong><code>%LOCALAPPDATA%\ZestDrop\logs</code> 中的小型日志会记录“任务完成”和错误信息等事件，用于排查问题。它不会离开你的电脑，有大小上限，你可以随时删除。</li>
-      <li><strong>设置。</strong>你选择的界面语言，以及是否在启动时显示欢迎窗口，保存在 <code>%LOCALAPPDATA%\ZestDrop\settings.json</code>。</li>
+      <li><strong>设置。</strong><code>%LOCALAPPDATA%\ZestDrop\settings.json</code> 保存你的选择：界面语言、轮盘布局、是否显示欢迎窗口、你指定的保存文件夹、预设和流程，以及你要求监视的文件夹。预设从不保存区域、时间和密码。<strong>最近输出</strong>列表只在 ZestDrop 运行期间保留。</li>
+      <li><strong>文字识别。</strong>使用 Windows 自带的光学字符识别功能，在你的电脑上完成。</li>
+      <li><strong>剪贴板。</strong>只有当你在托盘菜单中选择处理剪贴板内容时，ZestDrop 才会读取剪贴板；只有当你点击<strong>复制结果</strong>时才会写入。</li>
+      <li><strong>监视文件夹。</strong>只监视你添加的文件夹。其中的新文件和其他任务一样，在你的电脑上处理。</li>
+      <li><strong>开机自启和右键菜单。</strong>只有在你开启后，ZestDrop 才会把自己加入当前用户的 Windows 启动应用或资源管理器右键菜单。关闭后会移除相应条目。</li>
       <li><strong>Microsoft Office。</strong>部分 Office 转换会调用你电脑上已安装的 Word、Excel 或 PowerPoint。ZestDrop 不会更改 Office 自身的隐私设置。</li>
     </ul>
 

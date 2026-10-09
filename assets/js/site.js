@@ -56,7 +56,7 @@
   onScroll();
 
   /* ---------- Latest release (falls back to the links in the HTML) ---------- */
-  let release = { tag: "v0.1.1", size: 274469261 };
+  let release = { tag: "v1.0.0", size: 263177320 };
   function renderRelease() {
     const mb = Math.round(release.size / 1048576);
     const label = `${release.tag} · ${mb} MB · ${lang === "zh" ? "便携 ZIP" : "portable ZIP"}`;
@@ -75,48 +75,27 @@
     .catch(() => { /* offline or rate limited: keep the built-in links */ });
 
   /* ---------- Interactive demo ---------- */
-  // Menus follow the app's Catalog.cs: what each extension converts to, and which tools it offers for a single file.
+  // Every menu comes from the app itself (assets/js/catalog.js, made by scripts/build-catalog.py).
+  const CATALOG = window.ZD_CATALOG;
   const IMAGES = ["jpg", "png", "webp", "heic", "tiff", "svg", "avif", "bmp"];
   const AUDIO = ["mp3", "m4a", "wav", "flac", "ogg", "opus", "aiff", "wma"];
-  const VIDEO = ["mp4", "mov", "mkv", "webm", "avi", "wmv"];
-  const ARCHIVES = ["zip", "tar", "gz", "rar"];
-  const IMAGE_TARGETS = ["jpg", "png", "webp", "heic", "tiff", "avif", "bmp", "pdf"];
-  const kindOf = e => IMAGES.includes(e) ? "image" : AUDIO.includes(e) ? "audio" : VIDEO.includes(e) || e === "gif" ? "video" : e === "pdf" ? "pdf" : e === "docx" ? "office" : ["txt", "srt", "vtt"].includes(e) ? "text" : ARCHIVES.includes(e) ? "archive" : "file";
-  function targets(e) {
-    if (e === "docx") return ["pdf", "png", "jpg", "txt", "docx", "doc", "rtf", "odt", "html"]; // with Microsoft Word installed
-    if (e === "jpg" || e === "png") return [...IMAGE_TARGETS, "docx"];
-    if (IMAGES.includes(e)) return IMAGE_TARGETS;
-    if (AUDIO.includes(e)) return AUDIO;
-    if (VIDEO.includes(e)) return [...VIDEO, "gif", "mp3"];
-    if (e === "gif") return VIDEO;
-    if (e === "pdf") return ["docx", "jpg", "png", "txt"];
-    if (e === "txt") return ["pdf", "jpg", "png", "srt", "vtt"];
-    if (e === "srt" || e === "vtt") return ["srt", "vtt", "txt"];
-    return ARCHIVES;
-  }
-  function tools(e) {
-    switch (kindOf(e)) {
-      case "image": return e === "svg" ? [] : e === "bmp" ? ["compress", "editImage", "frameImage", "cropImage", "redactImage"] : ["compress", "removeMetadata", "editImage", "frameImage", "cropImage", "redactImage"];
-      case "audio": return ["compress", "removeMetadata", "normalizeAudio", "audioToVideo", "trimAudio", "audioChannels", "redactAudio"];
-      case "video": return e === "gif" ? ["removeMetadata"] : ["compress", "removeMetadata", "muteVideo", "trimVideo", "cropVideo", "changeVideoSpeed", "videoSnapshots", "splitVideo", "redactVideo"];
-      case "pdf": return ["compress", "removeMetadata", "splitPDF", "organizePDF"];
-      case "office": return ["officePdf", "removeMetadata"];
-      case "archive": return ["extractArchive"];
-      default: return [];
-    }
-  }
+  const VIDEO = ["mp4", "mov", "mkv", "webm", "avi", "wmv", "gif"];
+  const ARCHIVES = ["zip", "tar", "gz", "rar", "7z"];
+  const OFFICE = ["doc", "docx", "rtf", "odt", "html", "ppt", "pptx", "odp", "xls", "xlsx", "ods", "csv", "tsv", "json"];
+  // Only picks the colour of the demo's file icons.
+  const kindOf = e => IMAGES.includes(e) ? "image" : AUDIO.includes(e) ? "audio" : VIDEO.includes(e) ? "video" : e === "pdf" ? "pdf" : OFFICE.includes(e) ? "office" : ["txt", "srt", "vtt"].includes(e) ? "text" : ARCHIVES.includes(e) ? "archive" : "file";
   const extOf = name => /\.tar\.gz$/i.test(name) ? "gz" : name.includes(".") ? name.split(".").pop().toLowerCase() : "";
   const stemOf = name => name.replace(/(\.tar\.gz|\.[^.]+)$/i, "");
-  // A folder can only be packed, matching the app's PackingOnly rule.
+  // Options are "convert:png", "pack:zip" or "tool:<id>"; tool ids can contain a colon ("merge:cropRotate").
+  const splitOption = option => { const i = option.indexOf(":"); return [option.slice(0, i), option.slice(i + 1)]; };
   function menu(file, mode) {
-    if (file.folder) return mode === "formats" ? ARCHIVES.map(t => "pack:" + t) : [];
-    if (mode === "tools") return tools(file.ext).map(t => "tool:" + t);
-    return targets(file.ext).filter(t => t !== file.ext).map(t => "convert:" + t);
+    const entry = CATALOG.menus[file.folder ? "folder" : file.ext] || CATALOG.menus.other;
+    return mode === "tools" ? entry.tools.map(id => "tool:" + id) : entry.formats.slice();
   }
-  const fmtName = t => t === "gz" ? "GZIP" : t.toUpperCase();
   function label(option) {
-    const [kind, value] = option.split(":");
-    return kind === "convert" ? fmtName(value) : kind === "pack" ? demoText().pack(fmtName(value)) : demoText().tools[value];
+    const [kind, value] = splitOption(option), id = kind === "tool" ? value : option;
+    const entry = CATALOG.labels[id];
+    return entry ? entry[lang] : value.toUpperCase();
   }
   const iconTag = file => file.folder ? "DIR" : /\.tar\.gz$/i.test(file.name) ? "TGZ" : file.ext.toUpperCase();
   const iconHtml = file => `<span class="file-icon t-${file.folder ? "folder" : kindOf(file.ext)}"><b>${iconTag(file)}</b></span>`;
@@ -277,7 +256,7 @@
     if (!s) return;
     if (!s.options.length) { say(demoText().nothing, 4000); return; }
     if (index < 0) { if (s.source !== "auto") say(demoText().outside, 4000); return; }
-    const option = s.options[index], [kind, value] = option.split(":");
+    const option = s.options[index], [kind, value] = splitOption(option);
     if (kind === "tool" && value !== "extractArchive") { say(demoText().toolInfo(label(option)), 6000); return; }
     enqueue(s.file, kind, value);
   }

@@ -9,20 +9,21 @@
   const SVG = "http://www.w3.org/2000/svg";
   const wheelUI = window.ZD_WHEEL, C = wheelUI.CENTER;
 
+  // Which sample file each tab shows. The menus themselves come from the app (assets/js/catalog.js).
+  const CATALOG = window.ZD_CATALOG;
   const CATS = {
-    images:    { formats: ["png", "webp", "heic", "tiff", "avif", "bmp", "pdf", "docx"], tools: ["compress", "removeMetadata", "editImage", "frameImage", "cropImage", "redactImage"] },
-    video:     { formats: ["mov", "mkv", "webm", "avi", "wmv", "gif", "mp3"], tools: ["compress", "removeMetadata", "muteVideo", "trimVideo", "cropVideo", "changeVideoSpeed", "videoSnapshots", "splitVideo", "redactVideo"] },
-    audio:     { formats: ["mp3", "m4a", "flac", "ogg", "opus", "aiff", "wma"], tools: ["compress", "removeMetadata", "normalizeAudio", "audioToVideo", "trimAudio", "audioChannels", "redactAudio"] },
-    documents: { formats: ["docx", "jpg", "png", "txt"], tools: ["compress", "removeMetadata", "splitPDF", "organizePDF"] },
-    // A folder can only be packed; a ZIP archive offers Extract.
-    archives:  { formats: ["zip", "tar", "gz", "rar"], pack: true, tools: ["extractArchive"] }
+    images:    { formats: "jpg", tools: "jpg" },
+    video:     { formats: "mp4", tools: "mp4" },
+    audio:     { formats: "wav", tools: "wav" },
+    documents: { formats: "pdf", tools: "pdf" },
+    // A folder can only be packed: as a plain archive, or as an encrypted or split one.
+    archives:  { formats: "folder", pack: true, tools: "folder" }
   };
   const order = Object.keys(CATS);
   // /?tab=video opens the Video tab, so a direct link to a file type works.
   const requested = new URLSearchParams(location.search).get("tab");
   let cat = order.includes(requested) ? requested : "images";
 
-  const fmtName = f => f === "gz" ? "GZIP" : f.toUpperCase();
   const polar = wheelUI.polar;
   function node(name, attrs, parent) {
     const el = document.createElementNS(SVG, name);
@@ -70,7 +71,10 @@
   }
 
   function render() {
-    const lang = window.ZD.lang, t = window.ZD_SHOW[lang], d = window.ZD_DEMO[lang], c = CATS[cat];
+    const lang = window.ZD.lang, t = window.ZD_SHOW[lang], c = CATS[cat];
+    const label = id => CATALOG.labels[id][lang];
+    // Captions name the target format alone ("Convert to PNG", "Pack as ZIP").
+    const target = id => { const v = id.slice(id.indexOf(":") + 1); return v === "gz" ? "GZIP" : v.toUpperCase(); };
     for (const tab of $$(".tab")) {
       const k = tab.dataset.cat, selected = k === cat;
       $("span", tab).textContent = t.cats[k].tab;
@@ -83,10 +87,11 @@
     $("#show-fmt-label").textContent = c.pack ? t.pack : t.convert;
     $("#show-tools-label").textContent = t.tools;
 
-    const fmtLabels = c.formats.map(f => c.pack ? d.pack(fmtName(f)) : fmtName(f));
-    wheel($("#show-wheel-fmt"), fmtLabels, t.file, i => c.pack ? t.packAs(fmtName(c.formats[i])) : t.convertTo(fmtName(c.formats[i])), $("#show-fmt-cap"), t.fmtAria(t.sources[cat], fmtLabels.join(lang === "zh" ? "、" : ", ")));
-    const toolLabels = c.tools.map(id => d.tools[id]);
-    wheel($("#show-wheel-tools"), toolLabels, t.file, i => toolLabels[i], $("#show-tools-cap"), t.toolsAria(t.toolsSources[cat] || t.sources[cat], toolLabels.join(lang === "zh" ? "、" : ", ")));
+    const formats = CATALOG.menus[c.formats].formats, tools = CATALOG.menus[c.tools].tools;
+    const fmtLabels = formats.map(label);
+    wheel($("#show-wheel-fmt"), fmtLabels, t.file, i => c.pack ? t.packAs(target(formats[i])) : t.convertTo(target(formats[i])), $("#show-fmt-cap"), t.fmtAria(t.sources[cat], fmtLabels.join(lang === "zh" ? "、" : ", ")));
+    const toolLabels = tools.map(label);
+    wheel($("#show-wheel-tools"), toolLabels, t.file, i => toolLabels[i], $("#show-tools-cap"), t.toolsAria(t.sources[cat], toolLabels.join(lang === "zh" ? "、" : ", ")));
   }
 
   function select(next, focus) {

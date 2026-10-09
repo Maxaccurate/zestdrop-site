@@ -93,16 +93,16 @@
     start("photo.png"); expect(isOpen(), "cannot drag after blur");
   });
   await test("Ctrl+Shift opens tools; Shift pressed afresh returns to formats; adding Ctrl switches back", async () => {
-    const b = start("trip.mp4", { shiftKey: true, ctrlKey: true }); expect(labels()[0] === "Compress", "not tools: " + labels());
+    const b = start("trip.mp4", { shiftKey: true, ctrlKey: true }); expect(labels()[0] === "Resolution & compress", "not tools: " + labels());
     pe("pointermove", b, [500, 300]); pe("pointermove", b, [505, 300], { shiftKey: true }); expect(labels()[0] === "MOV", "did not switch back");
-    pe("pointermove", b, [510, 300], { shiftKey: true, ctrlKey: true }); expect(labels()[0] === "Compress", "Ctrl did not switch to tools");
+    pe("pointermove", b, [510, 300], { shiftKey: true, ctrlKey: true }); expect(labels()[0] === "Resolution & compress", "Ctrl did not switch to tools");
   });
   await test("a chord only affects that drag; the next plain drag uses the toggle", async () => {
     start("photo.png"); expect(labels()[0] === "JPG", "mode stuck: " + labels());
   });
   await test("tool drop explains the tool window and creates no file", async () => {
-    const before = files().join(); const b = start("trip.mp4", { shiftKey: true, ctrlKey: true }); release(b, petal(idx("Trim")));
-    await wait(1600); expect(files().join() === before, "file added"); expect(/Trim opens a tool window/.test($("#demo-help").textContent), "help: " + $("#demo-help").textContent);
+    const before = files().join(); const b = start("trip.mp4", { shiftKey: true, ctrlKey: true }); release(b, petal(idx("Trim & split")));
+    await wait(1600); expect(files().join() === before, "file added"); expect(/Trim & split opens a tool window/.test($("#demo-help").textContent), "help: " + $("#demo-help").textContent);
   });
   await test("new output files can be dragged, with their own menu", async () => {
     const b = start("trip.mp4"); release(b, petal(idx("MOV"))); await idle();
@@ -111,18 +111,24 @@
     start(name); expect(isOpen(), "output not draggable");
     expect(labels().includes("MP4") && !labels().includes("MOV") && labels().includes("GIF"), "menu " + labels());
   });
-  await test("extract → folder; folders can only be packed; tools show No actions", async () => {
+  await test("extract → folder; folders can only be packed; a file with no tools shows No actions", async () => {
     $("#mode-tools").click();
     let b = start("photos.zip"); expect(labels().join() === "Extract", "tools " + labels()); release(b, petal(0)); await idle();
     const folder = files().find(n => /^photos-extracted(-\d+)?$/.test(n)); expect(folder, "no folder " + files());
     $("#mode-formats").click();
-    b = start(folder); expect(labels().join() === "Pack ZIP,Pack TAR,Pack GZIP,Pack RAR", "pack menu " + labels()); release(b, petal(idx("Pack ZIP"))); await idle();
-    expect(files().some(n => n.startsWith(folder + "-packed") && n.endsWith(".zip")), "no packed zip " + files());
+    b = start(folder); expect(labels().join() === "Pack ZIP,Pack TAR,Pack GZIP,Pack RAR,Pack 7Z", "pack menu " + labels()); release(b, petal(idx("Pack 7Z"))); await idle();
+    expect(files().some(n => n.startsWith(folder + "-packed") && n.endsWith(".7z")), "no packed 7z " + files());
     if (btn(folder)) {
+      // A folder's only tool is the encrypted / split archive, which opens a tool window.
       b = start(folder); pe("pointermove", b, [500, 300], { shiftKey: true, ctrlKey: true });
-      expect(labels().length === 0 && /No actions/.test($("#wheel").textContent), "expected No actions");
-      release(b, hub()); expect(/No conversions/.test($("#demo-help").textContent), "help " + $("#demo-help").textContent);
+      expect(labels().join() === "Encrypted / split archive", "folder tools " + labels());
+      release(b, petal(0)); expect(/Encrypted \/ split archive opens a tool window/.test($("#demo-help").textContent), "help " + $("#demo-help").textContent);
     }
+    // Text files convert but have no tools.
+    if (!files().some(n => /\.txt$/.test(n))) { b = start("report.pdf"); release(b, petal(idx("TXT"))); await idle(); }
+    b = start(files().find(n => /\.txt$/.test(n))); pe("pointermove", b, [500, 300], { shiftKey: true, ctrlKey: true });
+    expect(labels().length === 0 && /No actions/.test($("#wheel").textContent), "expected No actions");
+    release(b, hub()); expect(/No conversions/.test($("#demo-help").textContent), "help " + $("#demo-help").textContent);
   });
   await test("desk never grows past 3 outputs", async () => { expect(files().length <= 8, "files: " + files().length); });
   await test("keyboard: Enter opens without choosing, arrows move, Enter converts", async () => {
@@ -135,7 +141,7 @@
   await test("switching language mid-drag relabels the wheel", async () => {
     start("trip.mp4", { shiftKey: true, ctrlKey: true });
     $("#lang-toggle").click(); const zh = labels()[0]; $("#lang-toggle").click();
-    expect(zh === "压缩" && labels()[0] === "Compress", "labels " + zh + " / " + labels()[0]);
+    expect(zh === "分辨率与压缩" && labels()[0] === "Resolution & compress", "labels " + zh + " / " + labels()[0]);
   });
   await test("layout: wheel above the progress card; only files block touch scrolling", async () => {
     expect(+getComputedStyle($("#wheel-wrap")).zIndex > +getComputedStyle($("#toast")).zIndex, "z-order");
