@@ -20,9 +20,9 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="/assets/css/site.css?v=7">
+<link rel="stylesheet" href="/assets/css/site.css?v=8">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ZestDrop","operatingSystem":"Windows","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT","url":"https://zestdrop.org/","downloadUrl":"https://github.com/Maxaccurate/ZestDrop/releases/latest","softwareVersion":"1.0.0"}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ZestDrop","operatingSystem":"Windows","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT","url":"https://zestdrop.org/","downloadUrl":"https://github.com/Maxaccurate/ZestDrop/releases/latest","installUrl":"https://apps.microsoft.com/detail/9NG514X8RQC6","softwareVersion":"1.0.0"}
 </script>
 <!--
   Visitor statistics: on Cloudflare Pages, enable Web Analytics in the project's Metrics tab; no snippet is needed.
@@ -63,9 +63,14 @@
         <div class="cta-row">
           <a class="btn btn-primary" href="https://github.com/Maxaccurate/ZestDrop/releases/download/v1.0.0/ZestDrop-v1.0.0-windows-x64.zip" data-download>
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.4 4.5v7H3zm0 13 7.4 1v-7.1H3zm8.3 1.1L21 21v-8.6h-9.7zm0-15.2v7.1H21V3z"/></svg>
-            <span data-i18n="cta.download">Download for Windows</span>
+            <span data-i18n="cta.download">Download from GitHub</span>
           </a>
-          <a class="btn btn-ghost" href="https://github.com/Maxaccurate/ZestDrop" data-i18n="cta.source">View source on GitHub</a>
+          <a class="store-badge store-hero" href="https://apps.microsoft.com/detail/9NG514X8RQC6?mode=direct">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="/assets/img/store/en-us-light.svg" data-srcset-en="/assets/img/store/en-us-light.svg" data-srcset-zh="/assets/img/store/zh-cn-light.svg">
+              <img src="/assets/img/store/en-us-dark.svg" data-src-en="/assets/img/store/en-us-dark.svg" data-src-zh="/assets/img/store/zh-cn-dark.svg" width="161" height="44" alt="Download from the Microsoft Store" data-i18n-alt="store.alt">
+            </picture>
+          </a>
         </div>
         <p class="fineprint"><span data-release-meta>v1.0.0 · 251 MB · portable ZIP</span> · <span data-i18n="cta.fine">Windows x64 · English and 简体中文</span></p>
       </div>
@@ -100,7 +105,7 @@
     <ul class="wrap strip-row">
       <li><b data-i18n="strip.local">100% local</b><span data-i18n="strip.local.d">Files never leave your PC</span></li>
       <li><b data-i18n="strip.free">Free &amp; open source</b><span data-i18n="strip.free.d">MIT licensed</span></li>
-      <li><b data-i18n="strip.portable">Portable</b><span data-i18n="strip.portable.d">No installer, nothing else to install</span></li>
+      <li><b data-i18n="strip.portable">Portable or Store</b><span data-i18n="strip.portable.d">Run the ZIP from any folder, or install from the Store</span></li>
       <li><b data-i18n="strip.safe">Originals untouched</b><span data-i18n="strip.safe.d">New files are saved alongside</span></li>
     </ul>
   </section>
@@ -212,7 +217,7 @@
         <div><dt data-i18n="flow.flows.t">Flows</dt><dd data-i18n="flow.flows.d">Chain tools with their presets, such as resize, then watermark, then compress. The flow appears in the tool wheel for that kind of file.</dd></div>
         <div><dt data-i18n="flow.watch.t">Watched folders</dt><dd data-i18n="flow.watch.d">New files in a folder are processed automatically, with the results in a <q>ZestDrop output</q> folder inside it.</dd></div>
         <div><dt data-i18n="flow.save.t">Save location</dt><dd data-i18n="flow.save.d">Save next to the original or always in one folder. <b>Recent results</b> lists your latest outputs, and <b>Copy result</b> puts a new file on the clipboard.</dd></div>
-        <div><dt data-i18n="flow.start.t">Clipboard and right-click</dt><dd data-i18n="flow.start.d">Process a copied screenshot or copied files, or right-click files in Explorer and choose <b>Process with ZestDrop</b>.</dd></div>
+        <div><dt data-i18n="flow.start.t">Clipboard and right-click</dt><dd data-i18n="flow.start.d">Process a copied screenshot or copied files, or right-click files in Explorer and choose <b>Process with ZestDrop</b> (portable ZIP only).</dd></div>
         <div><dt data-i18n="flow.boot.t">Start with Windows</dt><dd data-i18n="flow.boot.d">Off unless you switch it on, from the tray menu or the welcome window.</dd></div>
       </dl>
     </div>
@@ -228,7 +233,7 @@
         <li data-i18n="priv.1"><b>Nothing is uploaded.</b> Every conversion runs locally and works offline.</li>
         <li data-i18n="priv.2"><b>Originals are never overwritten.</b> Outputs get a clear suffix, and duplicates get a number.</li>
         <li data-i18n="priv.3"><b>Everything is included.</b> FFmpeg, Python, 7-Zip and .NET ship inside the download.</li>
-        <li data-i18n="priv.4"><b>It stays out of the way.</b> No installer and no main window. It only starts with Windows or joins Explorer's right-click menu if you switch that on.</li>
+        <li data-i18n="priv.4"><b>It stays out of the way.</b> There's no main window to manage. It only starts with Windows or joins Explorer's right-click menu if you switch that on.</li>
       </ul>
     </div>
   </section>
@@ -237,22 +242,39 @@
     <div class="wrap download">
       <img src="/assets/img/logo.png" alt="" width="72" height="72">
       <h2 data-i18n="dl.title">Get ZestDrop</h2>
-      <p class="section-lead" data-i18n="dl.lead">Free for personal and commercial use. Unzip and run.</p>
-      <a class="btn btn-primary btn-large" href="https://github.com/Maxaccurate/ZestDrop/releases/download/v1.0.0/ZestDrop-v1.0.0-windows-x64.zip" data-download>
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.4 4.5v7H3zm0 13 7.4 1v-7.1H3zm8.3 1.1L21 21v-8.6h-9.7zm0-15.2v7.1H21V3z"/></svg>
-        <span data-i18n="cta.download">Download for Windows</span>
-      </a>
-      <p class="fineprint" data-release-meta>v1.0.0 · 251 MB · portable ZIP</p>
-      <ol class="install">
-        <li data-i18n="dl.1">Download the ZIP and <b>extract the whole folder</b>.</li>
-        <li data-i18n="dl.2">Run <code>ZestDrop.exe</code>. It appears in the system tray.</li>
-        <li data-i18n="dl.3">Drag a file and press <kbd>Shift</kbd>.</li>
-      </ol>
-      <p class="links">
-        <a href="https://github.com/Maxaccurate/ZestDrop/releases/latest" data-release-notes data-i18n="dl.notes">Release notes &amp; SHA-256 checksum</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://github.com/Maxaccurate/ZestDrop/releases" data-i18n="dl.all">All versions</a>
-      </p>
+      <p class="section-lead" data-i18n="dl.lead">Free for personal and commercial use. Download the portable ZIP, or install it from the Microsoft Store.</p>
+      <div class="ways-to-get">
+        <section class="get-way" aria-labelledby="get-zip">
+          <h3 id="get-zip" data-i18n="dl.zip.t">Portable ZIP from GitHub</h3>
+          <p data-i18n="dl.zip.d">Nothing to install: unzip it and run it from any folder. The newest version is always here first.</p>
+          <a class="btn btn-primary btn-large" href="https://github.com/Maxaccurate/ZestDrop/releases/download/v1.0.0/ZestDrop-v1.0.0-windows-x64.zip" data-download>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.4 4.5v7H3zm0 13 7.4 1v-7.1H3zm8.3 1.1L21 21v-8.6h-9.7zm0-15.2v7.1H21V3z"/></svg>
+            <span data-i18n="cta.download">Download from GitHub</span>
+          </a>
+          <p class="fineprint" data-release-meta>v1.0.0 · 251 MB · portable ZIP</p>
+          <ol class="install">
+            <li data-i18n="dl.1">Download the ZIP and <b>extract the whole folder</b>.</li>
+            <li data-i18n="dl.2">Run <code>ZestDrop.exe</code>. It appears in the system tray.</li>
+            <li data-i18n="dl.3">Drag a file and press <kbd>Shift</kbd>.</li>
+          </ol>
+          <p class="links">
+            <a href="https://github.com/Maxaccurate/ZestDrop/releases/latest" data-release-notes data-i18n="dl.notes">Release notes &amp; SHA-256 checksum</a>
+            <span aria-hidden="true">·</span>
+            <a href="https://github.com/Maxaccurate/ZestDrop/releases" data-i18n="dl.all">All versions</a>
+          </p>
+        </section>
+        <section class="get-way" aria-labelledby="get-store">
+          <h3 id="get-store" data-i18n="dl.store.t">Microsoft Store</h3>
+          <p data-i18n="dl.store.d">Installs in one click and updates itself, with no SmartScreen warning. New versions arrive after Microsoft reviews them.</p>
+          <a class="store-badge store-large" href="https://apps.microsoft.com/detail/9NG514X8RQC6?mode=direct">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="/assets/img/store/en-us-light.svg" data-srcset-en="/assets/img/store/en-us-light.svg" data-srcset-zh="/assets/img/store/zh-cn-light.svg">
+              <img src="/assets/img/store/en-us-dark.svg" data-src-en="/assets/img/store/en-us-dark.svg" data-src-zh="/assets/img/store/zh-cn-dark.svg" width="161" height="44" alt="Download from the Microsoft Store" data-i18n-alt="store.alt">
+            </picture>
+          </a>
+          <p class="fineprint" data-i18n="dl.store.fine">The Explorer right-click menu is only in the portable ZIP.</p>
+        </section>
+      </div>
       <p class="requirements" data-i18n="dl.req">Requires Windows 10 version 1809 or later, x64. The interface is in English or Simplified Chinese; switch any time from the tray menu. Layout-exact Office exports need desktop Microsoft Word, Excel or PowerPoint, and text recognition needs Windows' optical character recognition feature for your language.</p>
     </div>
   </section>
@@ -263,7 +285,7 @@
       <div class="faq">
         <details>
           <summary data-i18n="faq.1.q">Windows says “Windows protected your PC”. Is it safe?</summary>
-          <div data-i18n="faq.1.a"><p>ZestDrop isn't code-signed yet, so Windows SmartScreen warns about any new download from an unknown publisher. Click <b>More info</b> and then <b>Run anyway</b>. To check that your download is the official file, compare it with the SHA-256 checksum published on the release page. The full source code is on GitHub.</p></div>
+          <div data-i18n="faq.1.a"><p>The portable ZIP isn't code-signed yet, so Windows SmartScreen warns about any new download from an unknown publisher. Click <b>More info</b> and then <b>Run anyway</b>. To check that your download is the official file, compare it with the SHA-256 checksum published on the release page. The full source code is on GitHub.</p><p>The Microsoft Store version is signed by the Store, so it installs without this warning.</p></div>
         </details>
         <details>
           <summary data-i18n="faq.2.q">Is it really free?</summary>
@@ -291,7 +313,7 @@
         </details>
         <details>
           <summary data-i18n="faq.8.q">How do I update or uninstall it?</summary>
-          <div data-i18n="faq.8.a"><p>Quit ZestDrop from its tray menu. To update, extract the new version into a fresh folder; your settings and presets stay in <code>%LOCALAPPDATA%\ZestDrop</code>. <b>Start with Windows</b> follows the new folder the next time you launch it, but the Explorer right-click menu does not, so switch that off and on again.</p><p>To uninstall, first switch off <b>Start with Windows</b> and the right-click menu if you turned them on, then delete the folder. Delete <code>%LOCALAPPDATA%\ZestDrop</code> too to remove settings and logs.</p></div>
+          <div data-i18n="faq.8.a"><p>From the Microsoft Store, ZestDrop updates itself; uninstall it like any other app, from Start or <b>Settings › Apps</b>.</p><p>With the portable ZIP, quit ZestDrop from its tray menu. To update, extract the new version into a fresh folder; your settings and presets stay in <code>%LOCALAPPDATA%\ZestDrop</code>. <b>Start with Windows</b> follows the new folder the next time you launch it, but the Explorer right-click menu does not, so switch that off and on again.</p><p>To uninstall, first switch off <b>Start with Windows</b> and the right-click menu if you turned them on, then delete the folder. Delete <code>%LOCALAPPDATA%\ZestDrop</code> too to remove settings and logs.</p></div>
         </details>
       </div>
       <p class="faq-more" data-i18n="faq.more">Found a bug or have an idea? <a href="https://github.com/Maxaccurate/ZestDrop/issues">Open an issue on GitHub</a>. Please don't attach private files.</p>
@@ -317,10 +339,10 @@
   </div>
 </footer>
 
-<script src="/assets/js/i18n.js?v=8"></script>
+<script src="/assets/js/i18n.js?v=9"></script>
 <script src="/assets/js/catalog.js?v=1"></script>
 <script src="/assets/js/wheel-ui.js?v=1"></script>
-<script src="/assets/js/site.js?v=11"></script>
+<script src="/assets/js/site.js?v=12"></script>
 <script src="/assets/js/showcase.js?v=3"></script>
 </body>
 </html>

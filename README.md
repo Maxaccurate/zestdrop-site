@@ -16,6 +16,10 @@ When you change a CSS or JS file, bump its `?v=` number in `index.html` (and `40
 
 `tests/demo-tests.js` drives the drag-to-convert demo with pointer and keyboard events (21 checks: conversions, the job queue, cancelling with Esc, alt-tab or a missed release, keyboard use, language switching and layout). With the site running locally, open http://localhost:9876/?lang=en, paste the file into the browser console, and wait about 40 seconds for the summary. Synthetic events can't reproduce every browser quirk, so also try a few drags with a real mouse.
 
+## Microsoft Store link
+
+The hero and the download section link to the Store listing, product ID **9NG514X8RQC6** (`https://apps.microsoft.com/detail/9NG514X8RQC6?mode=direct`, the link form Microsoft's badge generator uses). The badges in `assets/img/store/` are Microsoft's official "Download from the Microsoft Store" badges from `get.microsoft.com/images/`, in English and Chinese, black for light pages and white for dark ones. They are stored here rather than loaded from Microsoft, so visitors' browsers contact Microsoft only when they click. Microsoft's badge guidelines allow resizing but not recolouring or cropping them.
+
 ## After each app release
 
 1. **Menus and numbers.** Run `python scripts/build-catalog.py --app <ZestDrop.exe> --catalog-source <ZestDrop/work/ZestDrop/Catalog.cs>`. It asks the app (`--capabilities`) for the menus of one sample of every file type, in both languages, and rewrites `assets/js/catalog.js`. Run it on a PC with desktop Office installed (Office conversions only appear then), with the combined-tools layout selected, and check its warnings. Saved flows are left out automatically.

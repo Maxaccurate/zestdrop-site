@@ -31,6 +31,7 @@
     $$("[data-i18n-alt]").forEach(el => { const value = text(el.dataset.i18nAlt); if (value != null) el.alt = value; });
     // Screenshots show the app in the visitor's language.
     $$("img[data-src-en]").forEach(img => { const src = lang === "zh" ? img.dataset.srcZh : img.dataset.srcEn; if (src && !img.src.endsWith(src)) img.src = src; });
+    $$("source[data-srcset-en]").forEach(source => { source.srcset = lang === "zh" ? source.dataset.srcsetZh : source.dataset.srcsetEn; });
     document.title = text("doc.title");
     metaDescription.content = text("doc.description");
     const toggle = $("#lang-toggle");
